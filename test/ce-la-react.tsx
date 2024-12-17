@@ -1,6 +1,7 @@
 import type TReactDOM from 'react-dom/client';
 import { test } from 'zora';
-import { type WebComponentProps, createComponent } from '../src/ce-la-react.js';
+import { createComponent } from '../src/ce-la-react.js';
+import type { WebComponentProps, ElementProps } from '../src/ce-la-react.js';
 
 declare global {
   // @ts-ignore
@@ -21,19 +22,45 @@ declare module 'react' {
   }
 }
 
-class MyProfile extends HTMLElement {
+class MyProfile extends (globalThis.HTMLElement ?? class {}) {
   static shadowRootOptions = { mode: 'open' };
-
-  static get observedAttributes() {
-    return ['firstname', 'age', 'human'];
-  }
 
   static getTemplateHTML(attrs: Record<string, string>) {
     return `<h1>Hello, ${attrs.firstname}!</h1>`;
   }
 
+  static get observedAttributes() {
+    return ['firstname', 'age', 'human'];
+  }
+
   #isInit = false;
   #metadata = {};
+
+  #init() {
+    if (this.#isInit) return;
+    this.#isInit = true;
+
+    if (!this.shadowRoot) {
+      this.attachShadow({ mode: 'open' });
+      this.render();
+    }
+
+    this.#upgradeProperty('firstName');
+    this.#upgradeProperty('age');
+    this.#upgradeProperty('human');
+  }
+
+  #upgradeProperty(this: ElementProps<MyProfile>, prop: string) {
+    // Sets properties that are set before the custom element is upgraded.
+    // https://web.dev/custom-elements-best-practices/#make-properties-lazy
+    if (Object.prototype.hasOwnProperty.call(this, prop)) {
+      const value = this[prop];
+      // Delete the set property from this instance.
+      delete this[prop];
+      // Set the value again via the (prototype) setter on this class.
+      this[prop] = value;
+    }
+  }
 
   connectedCallback() {
     this.#init();
@@ -57,16 +84,6 @@ class MyProfile extends HTMLElement {
       this.shadowRoot.innerHTML = MyProfile.getTemplateHTML({
         ...namedNodeMapToObject(this.attributes),
       });
-    }
-  }
-
-  #init() {
-    if (this.#isInit) return;
-    this.#isInit = true;
-
-    if (!this.shadowRoot) {
-      this.attachShadow({ mode: 'open' });
-      this.render();
     }
   }
 
@@ -106,7 +123,9 @@ class MyProfile extends HTMLElement {
   }
 }
 
-globalThis.customElements.define('my-profile', MyProfile);
+if (globalThis.customElements && !globalThis.customElements.get('my-profile')) {
+  globalThis.customElements.define('my-profile', MyProfile);
+}
 
 function namedNodeMapToObject(namedNodeMap: NamedNodeMap) {
   const obj: Record<string, string> = {};
@@ -116,7 +135,7 @@ function namedNodeMapToObject(namedNodeMap: NamedNodeMap) {
   return obj;
 }
 
-const CustomElementComponent = createComponent({
+const MyProfileComponent = createComponent({
   react: globalThis.React,
   tagName: 'my-profile',
   elementClass: MyProfile,
@@ -140,7 +159,7 @@ test('renders a custom element', async (t) => {
     await globalThis.React.act(async () => {
       root.render(
         globalThis.React.createElement(
-          CustomElementComponent,
+          MyProfileComponent,
           {
             suppressHydrationWarning: true,
             ref,

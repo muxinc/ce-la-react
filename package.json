@@ -1,6 +1,6 @@
 {
   "name": "ce-la-react",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "type": "module",
   "description": "Create a React component from a custom element.",
   "author": "@muxinc",
@@ -24,10 +24,11 @@
     "build:types": "tsc --outDir dist",
     "build": "run-s build:*",
     "watch": "run-p 'build:esm -- --watch=forever' 'build:types -- --watch'",
-    "pretest": "esbuild 'test/*.tsx' --bundle --outdir=test/tmp --define:process.env.NODE_ENV=\\\"test\\\"",
-    "test:18": "wet test test/test-react18.html",
-    "test:19": "wet test test/test-react19.html",
-    "test": "run-s test:*"
+    "pretest": "esbuild 'test/*.tsx' --bundle --outdir=tmp --define:process.env.NODE_ENV=\\\"test\\\"",
+    "test": "run-s test:*",
+    "test:18": "wet test test/test-react18.html --coverage",
+    "test:19": "wet test test/test-react19.html --coverage",
+    "prepublishOnly": "run-s lint build"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
