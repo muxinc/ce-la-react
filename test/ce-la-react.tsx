@@ -36,13 +36,19 @@ class MyProfile extends (globalThis.HTMLElement ?? class {}) {
   #isInit = false;
   #metadata = {};
 
+  // This init method might look strange but it is a pattern to avoid
+  // trying to access attributes in the constructor which is illegal!
+  //
+  // Just remember to call this method everywhere before you need to
+  // evaluate anything in the element's shadow DOM.
+  // Could be even in a property getter or setter.
   #init() {
     if (this.#isInit) return;
     this.#isInit = true;
 
     if (!this.shadowRoot) {
       this.attachShadow({ mode: 'open' });
-      this.render();
+      this.#render();
     }
 
     this.#upgradeProperty('firstName');
@@ -50,6 +56,17 @@ class MyProfile extends (globalThis.HTMLElement ?? class {}) {
     this.#upgradeProperty('human');
   }
 
+  #render() {
+    if (this.shadowRoot) {
+      this.shadowRoot.innerHTML = MyProfile.getTemplateHTML({
+        ...namedNodeMapToObject(this.attributes),
+      });
+    }
+  }
+
+  // This is a pattern to update property values that are set before
+  // the custom element is upgraded.
+  // https://web.dev/custom-elements-best-practices/#make-properties-lazy
   #upgradeProperty(this: ElementProps<MyProfile>, prop: string) {
     // Sets properties that are set before the custom element is upgraded.
     // https://web.dev/custom-elements-best-practices/#make-properties-lazy
@@ -72,17 +89,9 @@ class MyProfile extends (globalThis.HTMLElement ?? class {}) {
     if (oldValue === newValue) return;
 
     if (name === 'firstname') {
-      this.render();
+      this.#render();
       queueMicrotask(() => {
         this.dispatchEvent(new CustomEvent('firstname'));
-      });
-    }
-  }
-
-  render() {
-    if (this.shadowRoot) {
-      this.shadowRoot.innerHTML = MyProfile.getTemplateHTML({
-        ...namedNodeMapToObject(this.attributes),
       });
     }
   }
