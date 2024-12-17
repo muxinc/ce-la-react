@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="module">
+      import React from 'https://esm.sh/react@18?dev';
+      import ReactDOM from 'https://esm.sh/react-dom@18/client?dev';
+      globalThis.React = React;
+      globalThis.ReactDOM = ReactDOM;
+    </script>
+    <script type="module" src="./tmp/ce-la-react.js"></script>
+    <script>
+      globalThis.ZORA_TIMEOUT = 10000;
+      globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+    </script>
+  </head>
+  <body></body>
+</html>
