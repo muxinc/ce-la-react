@@ -215,7 +215,7 @@ export function createComponent<I extends HTMLElement, E extends EventNames = {}
       // internally be reflected to the accompanying property.
       if (
         k in elementClass.prototype &&
-        !(k in HTMLElement.prototype) &&
+        !(k in (globalThis.HTMLElement?.prototype ?? {})) &&
         !elementClass.observedAttributes?.some((attr) => attr === attrName)
       ) {
         elementProps[k] = v;
@@ -337,7 +337,7 @@ function setProperty<E extends Element>(node: E, name: string, value: unknown) {
   // It's only needed here for native HTMLElement properties that reflect
   // attributes of the same name but don't have that behavior like "id" or
   // "draggable".
-  if (value == null && name in HTMLElement.prototype) {
+  if (value == null && name in (globalThis.HTMLElement?.prototype ?? {})) {
     node.removeAttribute(name);
   }
 }
