@@ -1,6 +1,6 @@
 {
   "name": "ce-la-react",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "Create a React component from a custom element.",
   "author": "@muxinc",
