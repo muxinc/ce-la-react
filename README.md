@@ -2,9 +2,11 @@
 
 Create a React component from a custom element with SSR support.
 
-Large parts of this package are copied from the `@lit/react` package. 
+Large parts of this package are copied from the 
+[`@lit/react`](https://github.com/lit/lit/tree/main/packages/react) package. 
+
 The main difference is that this package is more geared towards 
-the use of vanilla custom elements.
+the use of vanilla custom elements and support SSR in a simpler way.
 
 Key differences are:
 
@@ -12,14 +14,10 @@ Key differences are:
 - Configurable conversion functions for properties to attributes
 - Support for custom element templates via a static method `getTemplateHTML`
 
-Note that these things are all handled by the `@lit/react` package, but
-your custom elements have to be built with Lit element to support SSR.
-
-## Overview
-
 ## `createComponent`
 
-While React can render Web Components, it [cannot](https://custom-elements-everywhere.com/libraries/react/results/results.html)
+While React can render Web Components, it 
+[cannot](https://custom-elements-everywhere.com/libraries/react/results/results.html)
 easily pass React props to custom element properties or event listeners.
 
 This package provides a utility wrapper `createComponent` which makes a
@@ -30,7 +28,7 @@ for events dispatched by the custom element.
 Since React v19 there is better support for custom elements, but unfortunately
 React wrappers are still needed for the time being.
 
-### How it works
+## How it works
 
 For properties, the wrapper inspects the web component class to discover
 its available properties. Next it differentiates from the original `@lit/react`.
@@ -46,14 +44,14 @@ to events fired by the custom element. For example passing `{onfoo: 'foo'}`
 means a function passed via a `prop` named `onfoo` will be called when the
 custom element fires the foo event with the event as an argument.
 
-### Usage
+## Usage
 
 Import `React`, a custom element class, and `createComponent`.
 
 ```js
 import * as React from 'react';
-import {createComponent} from '@lit/react';
-import {MyElement} from './my-element.js';
+import { createComponent } from 'ce-la-react';
+import { MyElement } from './my-element.js';
 
 export const MyElementComponent = createComponent({
   tagName: 'my-element',
@@ -76,7 +74,7 @@ React component.
 />
 ```
 
-#### Typescript
+## Typescript
 
 Event callback types can be refined by type casting with `EventName`. The
 type cast helps `createComponent` correlate typed callbacks to property names in
@@ -85,11 +83,10 @@ the event property map.
 Non-casted event names will fallback to an event type of `Event`.
 
 ```ts
-import type {EventName} from '@lit/react';
-
 import * as React from 'react';
-import {createComponent} from '@lit/react';
-import {MyElement} from './my-element.js';
+import { createComponent } from 'ce-la-react';
+import { MyElement } from './my-element.js';
+import type { EventName } from 'ce-la-react';
 
 export const MyElementComponent = createComponent({
   tagName: 'my-element',
@@ -121,7 +118,7 @@ careful to use the corresponding type dispatched or bubbled from the
 webcomponent. Incorrect types might result in additional properties, missing
 properties, or properties of the wrong type.
 
-#### Converting `props` to attributes
+## Converting `props` to attributes
 
 For advanced use cases, the `props` to attributes conversion functions can be customized.
 
@@ -146,7 +143,7 @@ export function defaultToAttributeValue(propValue: unknown) {
 }
 ```
 
-#### SSR (Server Side Rendering)
+## SSR (Server Side Rendering)
 
 This package supports SSR by rendering the custom element template and setting
 the React `dangerouslySetInnerHTML` prop with the rendered template. The custom
@@ -158,6 +155,7 @@ method is called with attributes that are converted from the React `props`.
 
 ```ts
 import * as React from 'react';
+import { createComponent } from 'ce-la-react';
 
 class MyProfile extends (globalThis.HTMLElement ?? class {}) {
   static shadowRootOptions = { mode: 'open' };
