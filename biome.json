@@ -19,7 +19,9 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+      "complexity": {
+        "noBannedTypes": "warn"
+      }
 		}
 	},
 	"javascript": {

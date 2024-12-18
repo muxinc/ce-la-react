@@ -47,7 +47,7 @@ export type ElementProps<I> = Partial<
 >;
 
 // Acceptable props to the React component.
-export type ComponentProps<I, E extends EventNames> = Omit<
+export type ComponentProps<I, E extends EventNames = {}> = Omit<
   React.HTMLAttributes<I>,
   // Prefer type of provided event handler props or those on element over
   // built-in HTMLAttributes
@@ -166,7 +166,7 @@ export interface Options<I extends HTMLElement, E extends EventNames>
  * a custom element attribute value. Default value is a function that converts
  * boolean prop values to empty strings and all other primitive values to strings.
  */
-export function createComponent<I extends HTMLElement, E extends EventNames>({
+export function createComponent<I extends HTMLElement, E extends EventNames = {}>({
   react: React,
   tagName,
   elementClass,
