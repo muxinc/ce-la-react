@@ -237,7 +237,8 @@ export function createComponent<I extends HTMLElement, E extends EventNames>({
     // useLayoutEffect produces warnings during server rendering.
     if (typeof window !== 'undefined') {
       // Set up event listeners on the custom element.
-      // Only for React 18 and older, React 19+ handles events correctly.
+      // Still handle events for React 19+ because they don't yet offer
+      // a way to have nicely camelCased event prop names on custom elements.
       for (const propName in eventProps) {
         const callback = eventProps[propName as keyof typeof eventProps];
         const useCapture = propName.endsWith('Capture');
