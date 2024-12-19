@@ -98,7 +98,7 @@ type CustomElementConstructor<T> = {
 
 export interface AttributeOptions {
   toAttributeName: (propName: string) => string;
-  toAttributeValue: (propValue: unknown) => unknown;
+  toAttributeValue: (propValue: unknown) => unknown | null | undefined;
 }
 
 const reservedReactProps = new Set([
@@ -227,10 +227,20 @@ export function createComponent<I extends HTMLElement, E extends EventNames = {}
         continue;
       }
 
-      const attrValue = IS_REACT_19_OR_NEWER ? v : toAttributeValue(v);
-      if (attrName && attrValue !== undefined) {
-        attrs[attrName] = attrValue;
-        reactProps[attrName] = attrValue;
+      const attrValue = toAttributeValue(v);
+
+      if (attrName && attrValue != null) {
+        attrs[attrName] = String(attrValue);
+
+        // React 18 and below require the conversion to attributes.
+        if (!IS_REACT_19_OR_NEWER) {
+          reactProps[attrName] = attrValue;
+        }
+      }
+
+      // React 19+ handles the property / attribute values itself.
+      if (attrName && IS_REACT_19_OR_NEWER) {
+        reactProps[attrName] = v;
       }
     }
 
