@@ -1,3 +1,12 @@
+## [0.1.3](https://github.com/muxinc/ce-la-react/compare/v0.1.2...v0.1.3) (2024-12-19)
+
+
+### Bug Fixes
+
+* to attribute conversion bug ([9c5ee73](https://github.com/muxinc/ce-la-react/commit/9c5ee7328a0fbe6ecd9fec888f7ccca1f3a94934))
+
+
+
 ## [0.1.2](https://github.com/muxinc/ce-la-react/compare/v0.1.1...v0.1.2) (2024-12-18)
 
 
