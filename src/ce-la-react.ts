@@ -87,7 +87,7 @@ type EventListeners<R extends EventNames> = {
 };
 
 type CustomElementConstructor<T> = {
-  getTemplateHTML?: (attrs: Record<string, string>, props?: Record<string, any>) => string;
+  getTemplateHTML?: (attrs: Record<string, string>, props?: Record<string, unknown>) => string;
   shadowRootOptions?: {
     mode?: string;
     delegatesFocus?: boolean;
