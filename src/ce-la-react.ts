@@ -87,7 +87,7 @@ type EventListeners<R extends EventNames> = {
 };
 
 type CustomElementConstructor<T> = {
-  getTemplateHTML?: (attrs: Record<string, string>) => string;
+  getTemplateHTML?: (attrs: Record<string, string>, props?: Record<string, unknown>) => string;
   shadowRootOptions?: {
     mode?: string;
     delegatesFocus?: boolean;
@@ -304,7 +304,7 @@ export function createComponent<I extends HTMLElement, E extends EventNames = {}
         shadowrootmode: mode,
         shadowrootdelegatesfocus: delegatesFocus,
         dangerouslySetInnerHTML: {
-          __html: elementClass.getTemplateHTML(attrs),
+          __html: elementClass.getTemplateHTML(attrs, props),
         },
       });
 
