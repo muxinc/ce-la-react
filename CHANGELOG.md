@@ -1,3 +1,12 @@
+# [0.2.0](https://github.com/muxinc/ce-la-react/compare/v0.1.3...v0.2.0) (2025-03-04)
+
+
+### Features
+
+* pass props to get template method ([#2](https://github.com/muxinc/ce-la-react/issues/2)) ([dd8d784](https://github.com/muxinc/ce-la-react/commit/dd8d784bc69de61baf27d2fbe2172f9d84d3589f))
+
+
+
 ## [0.1.3](https://github.com/muxinc/ce-la-react/compare/v0.1.2...v0.1.3) (2024-12-19)
 
 
