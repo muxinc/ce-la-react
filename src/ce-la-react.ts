@@ -227,6 +227,13 @@ export function createComponent<I extends HTMLElement, E extends EventNames = {}
         continue;
       }
 
+      const isNonPrimitive = typeof v === 'object' && v !== null;
+      
+      if (isNonPrimitive) {
+        elementProps[k] = v;
+        continue;
+      }
+
       const attrValue = toAttributeValue(v);
 
       if (attrName && attrValue != null) {
