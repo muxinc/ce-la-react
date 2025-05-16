@@ -240,7 +240,18 @@ export function createComponent<I extends HTMLElement, E extends EventNames = {}
 
       // React 19+ handles the property / attribute values itself.
       if (attrName && IS_REACT_19_OR_NEWER) {
-        reactProps[attrName] = v;
+
+        // The goal is to let React 19 handle the property / attribute values
+        // itself unless toAttributeValue returns a different value than the
+        // default conversion. Then the different value has to be passed
+        // This might be an array or object conversion to a string.
+        const attrValueFromDefault = defaultToAttributeValue(v);
+
+        if (attrValue !== attrValueFromDefault) {
+          reactProps[attrName] = attrValue;
+        } else {
+          reactProps[attrName] = v;
+        }
       }
     }
 
