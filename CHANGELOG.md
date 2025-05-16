@@ -1,3 +1,12 @@
+## [0.2.1](https://github.com/muxinc/ce-la-react/compare/v0.2.0...v0.2.1) (2025-05-16)
+
+
+### Bug Fixes
+
+* React 19+ complex reflected prop/attr bug ([#4](https://github.com/muxinc/ce-la-react/issues/4)) ([8483bc6](https://github.com/muxinc/ce-la-react/commit/8483bc6e48b8239c4351e1890b4f33af6fcf9d73))
+
+
+
 # [0.2.0](https://github.com/muxinc/ce-la-react/compare/v0.1.3...v0.2.0) (2025-03-04)
 
 
