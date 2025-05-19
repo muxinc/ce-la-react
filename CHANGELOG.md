@@ -1,3 +1,12 @@
+# [0.3.0](https://github.com/muxinc/ce-la-react/compare/v0.2.1...v0.3.0) (2025-05-19)
+
+
+### Features
+
+* add defaultProps option ([f8a7136](https://github.com/muxinc/ce-la-react/commit/f8a7136037c2d70f461eea3ebd9c0d64d34d3d66))
+
+
+
 ## [0.2.1](https://github.com/muxinc/ce-la-react/compare/v0.2.0...v0.2.1) (2025-05-16)
 
 
