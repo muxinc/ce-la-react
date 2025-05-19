@@ -134,6 +134,7 @@ export interface Options<I extends HTMLElement, E extends EventNames>
   elementClass: CustomElementConstructor<I>;
   events?: E;
   displayName?: string;
+  defaultProps?: Record<string, unknown>;
 }
 
 /**
@@ -159,6 +160,8 @@ export interface Options<I extends HTMLElement, E extends EventNames>
  * @param options.displayName A React component display name, used in debugging
  * messages. Default value is inferred from the name of custom element class
  * registered via `customElements.define`.
+ * @param options.defaultProps An object listing default props to pass to the
+ * component. These will be merged with any props passed in via React.
  * @param options.toAttributeName A function that converts a React prop name to
  * a custom element attribute name. Default value is a function that converts
  * prop names to lower case.
@@ -172,6 +175,7 @@ export function createComponent<I extends HTMLElement, E extends EventNames = {}
   elementClass,
   events,
   displayName,
+  defaultProps,
   toAttributeName = defaultToAttributeName,
   toAttributeValue = defaultToAttributeValue,
 }: Options<I, E>) {
@@ -323,6 +327,7 @@ export function createComponent<I extends HTMLElement, E extends EventNames = {}
     }
 
     return React.createElement(tagName, {
+      ...defaultProps,
       ...reactProps,
       ref: React.useCallback(
         (node: I) => {
