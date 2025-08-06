@@ -1,3 +1,12 @@
+## [0.3.1](https://github.com/muxinc/ce-la-react/compare/v0.3.0...v0.3.1) (2025-08-06)
+
+
+### Bug Fixes
+
+* elementClass.prototype undefined error with corejs polyfill ([#5](https://github.com/muxinc/ce-la-react/issues/5)) ([cdc294e](https://github.com/muxinc/ce-la-react/commit/cdc294e14f74aca72beae1fb344cb51e0e87e381))
+
+
+
 # [0.3.0](https://github.com/muxinc/ce-la-react/compare/v0.2.1...v0.3.0) (2025-05-19)
 
 
