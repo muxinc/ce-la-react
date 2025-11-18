@@ -1,3 +1,12 @@
+## [0.3.2](https://github.com/muxinc/ce-la-react/compare/v0.3.1...v0.3.2) (2025-11-18)
+
+
+### Bug Fixes
+
+* Added a key to templateShadowRoot ([#7](https://github.com/muxinc/ce-la-react/issues/7)) ([0de3f05](https://github.com/muxinc/ce-la-react/commit/0de3f0537f5ad6bc98cf9134fa10d209dcaf83ef))
+
+
+
 ## [0.3.1](https://github.com/muxinc/ce-la-react/compare/v0.3.0...v0.3.1) (2025-08-06)
 
 
