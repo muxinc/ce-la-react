@@ -201,7 +201,7 @@ export function createComponent<I extends HTMLElement, E extends EventNames = {}
     // Attributes to be passed to getTemplateHTML
     const attrs: Record<string, string> = {};
     // Props to be passed to React.createElement
-    const reactProps: Record<string, unknown> = {};
+    const reactProps: Record<string, unknown> & { children?: React.ReactNode } = {};
     // Props to be set on element with setProperty
     const elementProps: Record<string, unknown> = {};
 
@@ -322,6 +322,7 @@ export function createComponent<I extends HTMLElement, E extends EventNames = {}
         dangerouslySetInnerHTML: {
           __html: elementClass.getTemplateHTML(attrs, props),
         },
+        key: "ce-la-react-ssr-template-shadow-root",
       });
 
       reactProps.children = [templateShadowRoot, reactProps.children];
@@ -341,7 +342,7 @@ export function createComponent<I extends HTMLElement, E extends EventNames = {}
         },
         [ref]
       ),
-    });
+    }, reactProps.children);
   });
 
   ReactComponent.displayName = displayName ?? elementClass.name;
